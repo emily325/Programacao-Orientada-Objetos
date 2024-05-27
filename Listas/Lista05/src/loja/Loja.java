@@ -3,17 +3,43 @@ package loja;
 import java.util.ArrayList;
 
 public class Loja {
-    private String nome;
-    private String cliente;
-    private String funcionario;
+    private String nomeLoja;
     private int cep;
-    private boolean horarioComercial;
+    private boolean horarioComercial = false;
     private ArrayList<Produto> produtos = new ArrayList<>();
 
-    public Loja(String cliente, String funcionario){
-        this.cliente = cliente;
-        this.funcionario = funcionario;
+
+    public Loja(String nomeLoja, int cep){
+        this.nomeLoja = nomeLoja;
+        this.cep = cep;
+
+        produtos.add(new Produto("pao", 4.99, false, true));
+        produtos.add(new Produto("sabonete", 7.99, false, true));
+        produtos.add(new Produto("cereal", 14.99, false, true));
     }
+    public void adicionarProduto(Produto produto){
+        if(produto.getfoivendido()){
+            System.out.println("ja foi vendido");
+            return;
+        }
+
+        if(!produto.getestaNaValidade()){
+            System.out.println("Produto esta fora da validade, nao podera ser comprado");
+            return;
+        }
+
+        produto.setfoivendido(true);
+        produto.setestaNaValidade(true);
+        produtos.add(produto);
+    }
+
+    public void verProdutos(){
+        for (Produto produto : produtos) {
+            System.out.println(produto.getnome(nomeLoja));
+        }
+    }
+
+    
 
     public void abrirLoja(){
         if(horarioComercial){
@@ -32,17 +58,16 @@ public class Loja {
             return;
         }
     }
-    
-    public void setcliente(String cliente){
-       this.cliente = cliente;
-    }
-
-    public void setfuncionario(String funcionario){
-        this.funcionario = funcionario;
+   
+    public void setnomeLoja(String nomeLoja){
+        this.nomeLoja = nomeLoja;
     }
 
     public void setcep(int cep){
         this.cep = cep;
     }
-
+    
+    public ArrayList<Produto>getprodutos(){
+        return produtos;
+    }
 }
